@@ -16,7 +16,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"\\pavimus\\yii2-sms\\": ""
+			"\\pavimus\\sms\\": ""
 		}
 	}
 }

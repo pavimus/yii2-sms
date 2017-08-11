@@ -2,14 +2,12 @@
 
 namespace pavimus\sms;
 
-use yii\base\Object;
-
 
 /**
  * Class Sms
- * @package lowbase\sms
+ * @package pavimus\sms
  */
-class Sms extends Object
+class Sms extends \yii\base\Object
 {
     /**
      * Sms service configuration
@@ -49,6 +47,13 @@ class Sms extends Object
                 ]
             ];
         }
+    }
+
+    /**
+     * send sms
+     */
+    public function sendSms($phone,$text) {
+        die('ok');
     }
 
 }

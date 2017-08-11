@@ -3,6 +3,6 @@
 namespace pavimus\sms;
 
 
-class Service {
+class Service extends \yii\base\Object {
 
 }

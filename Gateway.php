@@ -7,14 +7,14 @@ namespace pavimus\sms;
  * Class Sms
  * @package pavimus\sms
  */
-class Sms extends \yii\base\Object
+class Gateway extends \yii\base\Object
 {
     /**
      * Sms service configuration
      *
      * @var array
      */
-    protected $service;
+    public $service;
 
     /**
      * Initialize the component.
@@ -24,12 +24,20 @@ class Sms extends \yii\base\Object
         parent::init();
         $this->registerTranslations();
 
-        /*
         if (!$this->service) {
             throw new \yii\base\ErrorException(\Yii::t('sms', 'Services are not configured.'));
         }
-        */
 
+    }
+
+    public function getService() {
+        static $service;
+
+        if (!$service) {
+            $service=\Yii::createObject($this->service);
+        }
+
+        return $service;
     }
 
     /**
@@ -52,8 +60,9 @@ class Sms extends \yii\base\Object
     /**
      * send sms
      */
-    public function sendSms($phone,$text) {
-        die('ok');
-    }
+    public function sendSms($phone, $text, $priority=false, &$smsId=null) {
+        $result=$this->getService()->send($phone, $text, $priority, $smsId);
 
+        return $result;
+    }
 }

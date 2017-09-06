@@ -21,4 +21,9 @@ class Debug extends \pavimus\sms\Service {
 
         return true;
     }
+
+    public function getAvailableSMS()
+    {
+        return 9999;
+    }
 }

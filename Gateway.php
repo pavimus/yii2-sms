@@ -58,11 +58,51 @@ class Gateway extends \yii\base\Object
     }
 
     /**
-     * send sms
+     * Send sms
+     * @param $phone - phone number (international format,only digits, for example 375296001010)
+     * @param $text - message text
+     * @param bool $priority - high priority or not.
+     * @param null $smsId - returned by service sms id
+     * @return mixed true if sms sent successfully, string with message in case of error
      */
     public function sendSms($phone, $text, $priority=false, &$smsId=null) {
         $result=$this->getService()->send($phone, $text, $priority, $smsId);
 
         return $result;
     }
+
+    /**
+     * Get Available sms count on service balance
+     * @return int - amount of available to send sms, string in case of error
+     */
+    public function getAvailableSMS() {
+        $result=$this->getService()->getAvailableSMS();
+
+        return $result;
+    }
+
+    /**
+     * Return amount of sms, used for sending text
+     * @param $text text in utf8
+     * @return int - amount of sms
+     */
+    public function calculateSMSCount($text) {
+        $mblen=mb_strlen($text);
+        $len=strlen($text);
+
+        if ($mblen != $len) {
+            if ($mblen > 70) {
+                return ceil($mblen/67-1e-6);
+            } else {
+                return 1;
+            }
+        } else {
+            if ($mblen > 160) {
+                return ceil($mblen/153-1e-6);
+            } else {
+                return 1;
+            }
+        }
+    }
+
 }

@@ -7,7 +7,7 @@ class RocketSmsBy extends \pavimus\sms\Service {
     public $username;
     public $password;
 
-    private function callApi($method,$params) {
+    private function callApi($method,$params=[]) {
         $params=array_merge($params,[
             'username'=>$this->username,
             'password'=>$this->password,
@@ -21,10 +21,11 @@ class RocketSmsBy extends \pavimus\sms\Service {
 
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($params));
 
-        $result = @json_decode(curl_exec($curl), true);
+        $response = curl_exec($curl);
+        $result = @json_decode($response, true);
 
         if (!$result) {
-            throw new \Exception('RocketSMS.by api error');
+            throw new \Exception('RocketSMS.by api error: '.$response);
         }
 
         if ($result && isset($result['error'])) {
@@ -52,5 +53,15 @@ class RocketSmsBy extends \pavimus\sms\Service {
         }
 
         return true;
+    }
+
+    public function getAvailableSMS() {
+        try {
+            $result=$this->callApi('balance');
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+
+        return intval($result['credits']);
     }
 }

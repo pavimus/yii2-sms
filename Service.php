@@ -12,4 +12,10 @@ abstract class Service extends \yii\base\Object {
      * @return $mixed result: true, if sms succesfully sent or error message
      */
     public abstract function send($phone, $text, $priority, &$smsId);
+
+    /**
+     * Get Available sms count on service balance
+     * @return int - amount of available to send sms, string in case of error
+     */
+    public abstract function getAvailableSMS();
 }

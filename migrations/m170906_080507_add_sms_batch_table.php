@@ -7,6 +7,10 @@ class m170906_080507_add_sms_batch_table extends Migration
     public function safeUp()
     {
         $this->execute('
+            CREATE SEQUENCE "sms_batch_id_seq"
+        ');
+
+        $this->execute('
             CREATE TABLE "sms_batch" (
                 "id" integer DEFAULT nextval(\'sms_batch_id_seq\') NOT NULL,
                 "status" smallint DEFAULT 0 NOT NULL,
@@ -25,8 +29,12 @@ class m170906_080507_add_sms_batch_table extends Migration
         $this->execute('
             ALTER TABLE "sms_batch"
             ADD CONSTRAINT "sms_batch_id" PRIMARY KEY ("id");
+        ');
+
+        $this->execute('
             CREATE INDEX "sms_batch_status_id" ON "sms_batch" ("status", "id");
         ');
+
     }
 
     public function safeDown()

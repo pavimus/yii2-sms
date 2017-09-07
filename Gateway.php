@@ -17,6 +17,13 @@ class Gateway extends \yii\base\Object
     public $service;
 
     /**
+     * Sms scheduler configuration
+     *
+     * @var array
+     */
+    public $scheduler;
+
+    /**
      * Initialize the component.
      */
     public function init()
@@ -38,6 +45,17 @@ class Gateway extends \yii\base\Object
         }
 
         return $service;
+    }
+
+    public function getScheduler() {
+        static $scheduler;
+
+        if (!$scheduler) {
+            $scheduler=\Yii::createObject($this->scheduler);
+            $scheduler->gateway=$this;
+        }
+
+        return $scheduler;
     }
 
     /**
@@ -105,4 +123,23 @@ class Gateway extends \yii\base\Object
         }
     }
 
+    /**
+     * Send sms in batch
+     * @param $destinations
+     * @param $text text
+     * @param $jobId returned job id
+     * @return mixed
+     */
+    public function sendBatch($destinations, $text, &$jobId=null) {
+        $result=$this->getScheduler()->sendBatch($destinations, $text, $jobId);
+
+        return $result;
+    }
+
+    /**
+     * Send sms from queue
+     */
+    public function processBackgroundTasks() {
+        return $this->getScheduler()->processBackgroundTasks();
+    }
 }

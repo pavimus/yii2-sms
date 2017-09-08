@@ -55,7 +55,7 @@ class Simple extends \pavimus\sms\Scheduler {
                 },$model->text);
 
                 try {
-                    $this->gateway->getService()->send($destination['phone'], $text, false, $smsId);
+                    $this->gateway->send($destination['phone'], $text, false, $smsId);
                 } catch (\Exception $e) {
                     $model->cnt_sent--;
                     $model->cnt_errors++;

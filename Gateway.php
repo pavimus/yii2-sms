@@ -75,6 +75,12 @@ class Gateway extends \yii\base\Object
         }
     }
 
+    public function sanitizePhoneNumber($phone) {
+        $phone=preg_replace('%[^0-9]+%','',$phone);
+
+        return $phone;
+    }
+
     /**
      * Send sms
      * @param $phone - phone number (international format,only digits, for example 375296001010)
@@ -84,6 +90,8 @@ class Gateway extends \yii\base\Object
      * @return mixed true if sms sent successfully, string with message in case of error
      */
     public function send($phone, $text, $priority=false, &$smsId=null) {
+        $phone=$this->sanitizePhoneNumber($phone);
+
         $result=$this->getService()->send($phone, $text, $priority, $smsId);
 
         return $result;

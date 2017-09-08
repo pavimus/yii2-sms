@@ -83,7 +83,7 @@ class Gateway extends \yii\base\Object
      * @param null $smsId - returned by service sms id
      * @return mixed true if sms sent successfully, string with message in case of error
      */
-    public function sendSms($phone, $text, $priority=false, &$smsId=null) {
+    public function send($phone, $text, $priority=false, &$smsId=null) {
         $result=$this->getService()->send($phone, $text, $priority, $smsId);
 
         return $result;

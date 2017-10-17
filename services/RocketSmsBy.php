@@ -35,7 +35,7 @@ class RocketSmsBy extends \pavimus\sms\Service {
         return $result;
     }
 
-    public function send($phone, $text, $priority, &$smsId) {
+    protected function send_internal($phone, $text, $priority, &$smsId) {
         $params=[
             'phone'=>$phone,
             'text'=>$text

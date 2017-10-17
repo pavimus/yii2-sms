@@ -42,6 +42,7 @@ class Gateway extends \yii\base\Object
 
         if (!$service) {
             $service=\Yii::createObject($this->service);
+            $service->gateway=$this;
         }
 
         return $service;

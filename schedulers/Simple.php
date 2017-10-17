@@ -55,10 +55,15 @@ class Simple extends \pavimus\sms\Scheduler {
                 },$model->text);
 
                 try {
-                    $this->gateway->send($destination['phone'], $text, false, $smsId);
+                    $phone=$this->gateway->sanitizePhoneNumber($destination['phone']);
+                    $res=$this->gateway->getService()->send($phone, $text, false, $smsId, $model->id);
+                    if ($res!==true) {
+                        $model->cnt_sent--;
+                        $model->cnt_errors++;
+                    }
                 } catch (\Exception $e) {
-                    $model->cnt_sent--;
-                    $model->cnt_errors++;
+                    Yii::error($e->getMessage());
+                    return $smsSent;
                 }
 
                 $model->status=SmsBatch::STATUS_SENDING;

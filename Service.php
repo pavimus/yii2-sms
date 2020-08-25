@@ -34,7 +34,7 @@ abstract class Service extends \yii\base\Object {
 
             $sms->save();
         } catch(\Exception $e) {
-            Yii::error($e->getMessage());
+            \Yii::error($e->getMessage());
         }
     }
 

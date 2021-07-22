@@ -6,12 +6,17 @@ namespace pavimus\sms\services;
 class RocketSmsBy extends \pavimus\sms\Service {
     public $username;
     public $password;
+    public $sender;
 
     private function callApi($method,$params=[]) {
         $params=array_merge($params,[
             'username'=>$this->username,
             'password'=>$this->password,
         ]);
+
+        if ($this->sender) {
+            $params['sender']=$this->sender;
+        }
 
         $curl = curl_init();
 

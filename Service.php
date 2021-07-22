@@ -36,6 +36,8 @@ abstract class Service extends \yii\base\Object {
         } catch(\Exception $e) {
             Yii::error($e->getMessage());
         }
+
+        return $res;
     }
 
     protected abstract function send_internal($phone, $text, $priority, &$smsId);

@@ -5,7 +5,7 @@ namespace pavimus\sms;
 use Yii;
 use \pavimus\sms\models\Sms;
 
-abstract class Service extends \yii\base\Object {
+abstract class Service extends \yii\base\BaseObject {
     public $gateway;
 
     /**

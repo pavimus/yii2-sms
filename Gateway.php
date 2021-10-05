@@ -7,7 +7,7 @@ namespace pavimus\sms;
  * Class Sms
  * @package pavimus\sms
  */
-class Gateway extends \yii\base\Object
+class Gateway extends \yii\base\BaseObject
 {
     /**
      * Sms service configuration

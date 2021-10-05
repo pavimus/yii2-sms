@@ -3,7 +3,7 @@
 namespace pavimus\sms;
 
 
-abstract class Scheduler extends \yii\base\Object {
+abstract class Scheduler extends \yii\base\BaseObject {
     public $gateway;
 
     /**

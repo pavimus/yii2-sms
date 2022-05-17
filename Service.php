@@ -8,6 +8,8 @@ use \pavimus\sms\models\Sms;
 abstract class Service extends \yii\base\BaseObject {
     public $gateway;
 
+    public $curlSettings = [];
+
     /**
      * @param $phone phone number in international format, only digits, for example 375295676678
      * @param $text message text
@@ -38,6 +40,12 @@ abstract class Service extends \yii\base\BaseObject {
         }
 
         return $res;
+    }
+
+    protected function applyCurlSettings($curl) {
+        foreach($this->curlSettings as $param => $value) {
+            curl_setopt($curl, $param, $value);
+        }
     }
 
     protected abstract function send_internal($phone, $text, $priority, &$smsId);

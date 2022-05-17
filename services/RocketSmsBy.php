@@ -26,6 +26,8 @@ class RocketSmsBy extends \pavimus\sms\Service {
 
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($params));
 
+        $this->applyCurlSettings($curl);
+        
         $response = curl_exec($curl);
         $result = @json_decode($response, true);
 

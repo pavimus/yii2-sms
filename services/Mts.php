@@ -21,6 +21,8 @@ class Mts extends \pavimus\sms\Service {
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         curl_setopt($curl, CURLOPT_USERPWD, $this->username . ':' . $this->password);
 
+        $this->applyCurlSettings($curl);
+
         $response = curl_exec($curl);
         $result = @json_decode($response, true);
 
